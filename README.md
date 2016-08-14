@@ -12,3 +12,9 @@ A C++ data strcutre (essentially a standard tree, but with features needed for s
 
 * Delete/Trim subtrees
 * Different search options BFS, DFS for tree
+
+### NOTE:
+when using struct data types make sure to include an operator overload for " == " i.e. a struct of the following:
+
+Will need a overload operator like this in order for the library to function:
+
