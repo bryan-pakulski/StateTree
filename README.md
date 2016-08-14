@@ -19,7 +19,7 @@ Which should result in output as follows:
 * Different search options BFS, DFS for tree
 
 ### NOTE:
-when using struct data types make sure to include an operator overload for " == " i.e. a struct of the following:
+when using struct data types make sure to include an operator overload for " == " i.e. A state tree of type struct st (see below for structure type)
 
 ![image](images/Structs.png?raw=true)
 
