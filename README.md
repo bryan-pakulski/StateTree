@@ -15,8 +15,8 @@ Which should result in output as follows:
 
 ### TODO:
 
-* Delete/Trim subtrees
-* Different search options BFS, DFS for tree
+* Delete/Trim subtrees (DONE)
+* Different search options BFS, DFS for tree (BFS done, DFS left)
 
 ### NOTE:
 when using struct data types make sure to include an operator overload for " == " i.e. A state tree of type struct st (see below for structure type)
