@@ -3,6 +3,7 @@
 #include <cstddef>
 #include <stdio.h>
 #include <vector>
+#include <queue>
 
 // Our tree data structure, contains data and children nodes
 template <typename TYPE> 
@@ -28,6 +29,11 @@ private:
 	void _destroy_(Node<TYPE> *leaf);
 	void _addNode_(TYPE key, TYPE parent, Node<TYPE> *leaf);
 	void _printTree_(Node<TYPE> *leaf, int depth);
+	bool _BFS_(TYPE searchterm, Node<TYPE> *leaf);
+	void _trimDuplicates_(TYPE searchterm, Node<TYPE> *leaf, bool trimming);
+
+	// Overload or edit this function in order to correctly print out the data type you want to display in the printTree function
+	void printTYPE(TYPE data);
 
 public:
 
@@ -39,6 +45,12 @@ public:
 
 	// Print the current tree and information about it
 	void printTree();
+
+	// Breadth First search, searches for the first appearance of the term
+	bool BFS(TYPE searchterm);
+
+	// Trims the tree of all duplicate search term subtrees, essentially a delete function
+	void trimDuplicates(TYPE searchterm);
 
 };
 
@@ -119,7 +131,6 @@ tree<TYPE> :: _addNode_(TYPE key, TYPE parent, Node<TYPE> *leaf)
 			leaf->leaves.push_back(temp);
 		}
 	}
-
 	// Continue down the tree
 	for (int i = 0; i < leaf->leaves.size(); i++)
 	{
@@ -142,6 +153,18 @@ tree<TYPE> :: printTree()
 	}	
 }
 
+// Overload this to print out data specific to your application
+template <class TYPE> void
+tree<TYPE> :: printTYPE(TYPE data)
+{
+	printf("   data: [");
+	for (int i = 0; i < 9; i++)
+	{
+		printf(" %d ", data.state[i].value);
+	}
+	printf("]\n");
+}
+
 template <class TYPE> void
 tree<TYPE> :: _printTree_(Node<TYPE> *leaf, int depth)
 {
@@ -149,8 +172,8 @@ tree<TYPE> :: _printTree_(Node<TYPE> *leaf, int depth)
 	if (leaf)
 	{
 		// The depth + 4 variable is used as padding to visualise the tree
-		printf("%*.s" "depth: %d\n", depth + 4, " ", depth);
-		printf("%*.s" "Value: %d\n", depth + 4, " ", leaf->data);
+		printf("%*.s" "depth: %d", depth + 4, " ", depth);
+		printTYPE(leaf->data);
 
 		// Explore children
 		printf("%*.s" "Children (%d): ", depth + 4, " ", leaf->leaves.size());
@@ -166,6 +189,103 @@ tree<TYPE> :: _printTree_(Node<TYPE> *leaf, int depth)
 			_printTree_(leaf->leaves[i], depth + 1);
 		}
 	}
+}
+
+// Breadth First Search, returns true if item exists
+template <class TYPE> bool
+tree<TYPE> :: BFS(TYPE searchterm)
+{
+	if (_BFS_(searchterm, root))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+template <class TYPE> bool
+tree<TYPE> :: _BFS_(TYPE searchterm, Node<TYPE> *leaf)
+{
+	// Search queue
+	std::queue<Node<TYPE> *> Q;
+
+	if (leaf)
+	{
+		Q.push(leaf);
+
+		while(!Q.empty())
+		{
+			Node<TYPE> *t = Q.front();
+
+			Q.pop();
+
+			if(t->data == searchterm){
+				return true;
+			}
+
+			for (int i = 0; i < t->leaves.size(); i++)
+			{
+				Q.push(t->leaves[i]);
+			}
+			
+		}
+
+		
+	}
+
+	return false;
+
+}
+
+// Trim function
+template <class TYPE> void
+tree<TYPE> :: trimDuplicates(TYPE searchterm)
+{
+	_trimDuplicates_(searchterm, root, false);
+}
+
+template <class TYPE> void
+tree<TYPE> :: _trimDuplicates_(TYPE searchterm, Node<TYPE> *leaf, bool trimming)
+{
+	// Search queue
+	std::queue<Node<TYPE> *> Q;
+
+	// Recurse through the tree, don't trim unless it's a duplicate, hence the bool argument
+	// It gets switched to true once the search term is found
+	if (leaf)
+	{
+		Q.push(leaf);
+
+		while(!Q.empty())
+		{
+
+			Node<TYPE> *t = Q.front();
+
+			Q.pop();
+
+			if (t->data == searchterm && trimming == true)
+			{
+				printf("trimming duplicate leaf of ");
+				printTYPE(t->data);
+				_destroy_(t);
+			}
+
+			if (t->data == searchterm && trimming == false)
+			{
+				trimming = true;
+			}
+
+			for (int i = 0; i < t->leaves.size(); i++)
+			{
+				Q.push(t->leaves[i]);
+			}
+
+
+		}
+	}
+	
 }
 
 
