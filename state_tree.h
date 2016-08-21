@@ -30,6 +30,7 @@ private:
 	void _addNode_(TYPE key, TYPE parent, Node<TYPE> *leaf);
 	void _printTree_(Node<TYPE> *leaf, int depth);
 	bool _BFS_(TYPE searchterm, Node<TYPE> *leaf);
+	bool _IDDFS_(TYPE searchterm, Node<TYPE> *leaf, int depth);
 	void _trimDuplicates_(TYPE searchterm, Node<TYPE> *leaf, bool trimming);
 
 	// Overload or edit this function in order to correctly print out the data type you want to display in the printTree function
@@ -49,11 +50,13 @@ public:
 	// Breadth First search, searches for the first appearance of the term
 	bool BFS(TYPE searchterm);
 
+	// Iterative deepening depth first search
+	bool IDDFS(TYPE searchterm, int limit);
+
 	// Trims the tree of all duplicate search term subtrees, essentially a delete function
 	void trimDuplicates(TYPE searchterm);
 
 };
-
 
 // Constructor
 template <class TYPE> 
@@ -191,6 +194,7 @@ tree<TYPE> :: _printTree_(Node<TYPE> *leaf, int depth)
 	}
 }
 
+
 // Breadth First Search, returns true if item exists
 template <class TYPE> bool
 tree<TYPE> :: BFS(TYPE searchterm)
@@ -231,13 +235,51 @@ tree<TYPE> :: _BFS_(TYPE searchterm, Node<TYPE> *leaf)
 			}
 			
 		}
-
-		
 	}
 
 	return false;
+}
+
+
+// Iterative Deepening Depth First Search, returns true if item exists
+template <class TYPE> bool
+tree<TYPE> :: IDDFS(TYPE searchterm, int limit)
+{
+	for (int i = 0; i < limit; i++)
+	{
+		if (_IDDFS_(root, i))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 
 }
+
+template <class TYPE> bool
+tree<TYPE> :: _IDDFS_(TYPE searchterm, Node<TYPE> *leaf, int depth)
+{
+	if (depth == 0 && leaf->data == searchterm)
+	{
+		return true;
+	}
+	else if (depth > 0)
+	{
+		for (int i = 0; i < leaf->leaves.size(); i++)
+		{
+			if (_IDDFS_(searchterm, leaf->leaves[i], depth-1))
+			{
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
 
 // Trim function
 template <class TYPE> void
@@ -281,11 +323,8 @@ tree<TYPE> :: _trimDuplicates_(TYPE searchterm, Node<TYPE> *leaf, bool trimming)
 			{
 				Q.push(t->leaves[i]);
 			}
-
-
 		}
 	}
-	
 }
 
 
