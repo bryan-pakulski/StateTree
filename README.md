@@ -13,9 +13,14 @@ Which should result in output as follows:
 
 ![image](images/Output.png?raw=true)
 
-### TODO:
+### Features:
+* Add / Delete Nodes
+* Trim Duplicate subtrees
+* Breadth First Search
+* Iterative Deepening Depth First Search
+* Hamming distance between data points
 
-* Delete/Trim subtrees (DONE)
+### TODO:
 * Different search options BFS, DFS, IDDFS for tree (BFS done, IDDFS done, only DFS left)
 
 ### NOTE:
