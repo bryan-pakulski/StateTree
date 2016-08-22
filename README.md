@@ -32,4 +32,6 @@ Will need a overload operator like this in order for the library to function:
 
 ![image](images/Overload.png?raw=true)
 
-This also applies to the hamming distance function, if you are using structs you must overload the ^ operator and return the data value of struct1 ^ struct2 in order for the function to work correctly, standard data types will work fine
+This also applies to the hamming distance function, if you are using structs you must overload the ^ operator and return the data value of struct1 ^ struct2 in order for the function to work correctly, standard data types will work fine;
+
+![image](images/hammingdistance.png?raw=true)
