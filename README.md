@@ -1,6 +1,13 @@
 # StateTree
 A C++ data structure (essentially a standard tree, but with features needed for state systems)
 
+### Features:
+* Add / Delete Nodes
+* Trim Duplicate subtrees
+* Breadth First Search
+* Iterative Deepening Depth First Search
+* Hamming distance between data points
+
 ### Initialisation and usage
 
 * Include header file in project
@@ -12,13 +19,6 @@ A C++ data structure (essentially a standard tree, but with features needed for 
 Which should result in output as follows:
 
 ![image](images/Output.png?raw=true)
-
-### Features:
-* Add / Delete Nodes
-* Trim Duplicate subtrees
-* Breadth First Search
-* Iterative Deepening Depth First Search
-* Hamming distance between data points
 
 ### TODO:
 * Different search options BFS, DFS, IDDFS for tree (BFS done, IDDFS done, only DFS left)
