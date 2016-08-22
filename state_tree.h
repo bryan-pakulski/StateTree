@@ -56,6 +56,9 @@ public:
 	// Trims the tree of all duplicate search term subtrees, essentially a delete function
 	void trimDuplicates(TYPE searchterm);
 
+	// Returns hamming distance between two points (state data, not actual nodes)
+	int hamming_distance(TYPE x, TYPE y);
+
 };
 
 // Constructor
@@ -247,7 +250,7 @@ tree<TYPE> :: IDDFS(TYPE searchterm, int limit)
 {
 	for (int i = 0; i < limit; i++)
 	{
-		if (_IDDFS_(root, i))
+		if (_IDDFS_(searchterm, root, i))
 		{
 			return true;
 		}
@@ -278,6 +281,25 @@ tree<TYPE> :: _IDDFS_(TYPE searchterm, Node<TYPE> *leaf, int depth)
 	}
 
 	return false;
+}
+
+// Hamming distance function, taken from https://en.wikipedia.org/wiki/Hamming_distance
+template <class TYPE> int
+tree<TYPE> :: hamming_distance(TYPE x, TYPE y)
+{
+	int dist = 0;
+    unsigned val = x ^ y;
+
+    // Count the number of bits set
+    while (val != 0)
+    {
+        // A bit is set, so increment the count and clear the bit
+        dist++;
+        val &= val - 1;
+    }
+
+    // Return the number of differing bits
+    return dist;
 }
 
 
